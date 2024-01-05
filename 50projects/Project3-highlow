@@ -1,0 +1,63 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+int money = 1000;
+
+int betCheck(int bet) {
+    if (bet > money || bet <= 0) {
+        std::cout << "Invalid Bet. Your current balance is: " << money << "\n";
+        return 0;
+    }
+    return bet;
+}
+
+void highlow() {
+    int bet, guess;
+    std::srand(std::time(0));
+    int computerChoice = 1 + (std::rand() % 100);
+
+    std::cout << "Welcome to High Low, you will have 6 attempts to guess a number from 1 - 100 inclusive, guess within the attempts and win 2:1\n";
+    std::cout << "How much would you like to bet: ";
+    std::cin >> bet;
+
+    if (betCheck(bet) == 0) return;
+
+    for (int i = 0; i < 6; i++) {
+        std::cout << "Guess " << i + 1 << ": ";
+        std::cin >> guess;
+
+        if (guess > computerChoice) {
+            std::cout << "Too High\n";
+        } else if (guess < computerChoice) {
+            std::cout << "Too Low\n";
+        } else {
+            std::cout << "You win " << bet * 3 << "\n";
+            money += bet * 2;
+            return;
+        }
+    }
+    std::cout << "You lost, the number was " << computerChoice << "\n";
+    money -= bet;
+}
+
+int main() {
+    std::cout << "Welcome to the Casino, what game would you like to play?\n";
+    std::cout << "1 - High Low";
+
+    int choice;
+    while (true) {
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1:
+                highlow();
+                break;
+            default:
+                std::cout << "Thank you for playing!";
+                return 0;
+        }
+        std::cout << "Your current balance is: " << money << "\n";
+        std::cout << "Play again? 1 - High Low, any other number to exit\n";
+    }
+}
