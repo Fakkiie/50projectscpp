@@ -1,0 +1,99 @@
+#include <iostream>
+#include <cmath> 
+
+float addition(float x, float y) {
+    return x + y;
+}
+
+float subtract(float x, float y) {
+    return x - y;
+}
+
+float divide(float x, float y) {
+    if (y == 0.0f) {
+        std::cout << "Error: Division by zero is not allowed.\n";
+        return 0.0f;
+    }
+    return x / y;
+}
+
+float multiply(float x, float y) {
+    return x * y;
+}
+
+float logarithm(float x) noexcept {
+    if (x <= 0.0f) {
+        std::cout << "Error: Logarithm of non-positive number is not allowed.\n";
+        return 0.0f;
+    }
+    return std::log(x);
+}
+
+float expo(float x) {
+    return std::exp(x);
+}
+
+float sqr(float x) {
+    if (x < 0.0f) {
+        std::cout << "Error: Square root of negative number is not allowed.\n";
+        return 0.0f;
+    }
+    return std::sqrt(x);
+}
+
+int main() {
+    int choice;
+    float x, y, result;
+
+    while (true) {
+        std::cout << "Welcome to the scientific calculator, what operation would you like?\n";
+        std::cout << "1 - Add, 2 - Subtract, 3 - Divide, 4 - Multiply, 5 - Logarithm, 6 - Exponential, 7 - Square Root, 8 - Quit\n";
+        std::cin >> choice;
+
+        if (choice == 8) {
+            std::cout << "Thank you for using my calculator!";
+            break;
+        }
+
+        if (choice >= 1 && choice <= 4) {
+            std::cout << "Enter two numbers: ";
+            std::cin >> x >> y;
+        } else if (choice >= 5 && choice <= 7) {
+            std::cout << "Enter a number: ";
+            std::cin >> x;
+        } else {
+            std::cout << "Invalid choice. Please try again.\n";
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                result = addition(x, y);
+                break;
+            case 2:
+                result = subtract(x, y);
+                break;
+            case 3:
+                result = divide(x, y);
+                break;
+            case 4:
+                result = multiply(x, y);
+                break;
+            case 5:
+                result = logarithm(x);
+                break;
+            case 6:
+                result = expo(x);
+                break;
+            case 7:
+                result = sqr(x);
+                break;
+            default:
+                std::cout << "Invalid choice. Please try again.\n";
+                continue;
+        }
+
+        std::cout << "Result: " << result << "\n";
+    }
+    return 0;
+}
