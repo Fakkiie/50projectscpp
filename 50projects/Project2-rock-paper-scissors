@@ -1,0 +1,49 @@
+#include <iostream>
+#include <cstdlib>  
+#include <ctime>    
+
+int main() {
+    std::cout << "Welcome to Rock, Paper, Scissors\n";
+    std::cout << "1 - Rock, 2 - Paper, 3 - Scissors, 4 - Quit\n";
+
+
+    std::srand(std::time(0));
+
+    int choice;
+    const int ROCK = 1;
+    const int PAPER = 2;
+    const int SCISSORS = 3;
+
+    while (true) {
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        if (choice == 4) {
+            std::cout << "Exiting game.\n";
+            break;
+        }
+
+        int computerChoice = 1 + (std::rand() % 3); 
+
+     
+        std::cout << "Computer chose: ";
+        switch (computerChoice) {
+            case ROCK: std::cout << "Rock\n"; break;
+            case PAPER: std::cout << "Paper\n"; break;
+            case SCISSORS: std::cout << "Scissors\n"; break;
+        }
+
+      
+        if (choice == computerChoice) {
+            std::cout << "It's a tie!\n";
+        } else if ((choice == ROCK && computerChoice == SCISSORS) ||
+                   (choice == PAPER && computerChoice == ROCK) ||
+                   (choice == SCISSORS && computerChoice == PAPER)) {
+            std::cout << "You win!\n";
+        } else {
+            std::cout << "Computer wins!\n";
+        }
+    }
+
+    return 0;
+}
