@@ -1,0 +1,73 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <unordered_map>
+
+using namespace std;
+
+unordered_map<string, string> readUserData() {
+    unordered_map<string, string> userData;
+    string username, password;
+    ifstream file("users.txt");
+    while (file >> username >> password) {
+        userData[username] = password;
+    }
+    file.close();
+    return userData;
+}
+
+void writeUserData(const unordered_map<string, string>& userData) {
+    ofstream file("users.txt");
+    for (const auto& pair : userData) {
+        file << pair.first << " " << pair.second << endl;
+    }
+    file.close();
+}
+
+bool login(const unordered_map<string, string>& userData) {
+    string username, password;
+    cout << "Enter a Username: ";
+    cin >> username;
+    cout << "Enter a Password: ";
+    cin >> password;
+
+    auto it = userData.find(username);
+    if (it != userData.end() && it->second == password) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+int main() {
+    unordered_map<string, string> userData = readUserData();
+    int choice;
+
+    do {
+        cout << "Main Menu" << endl;
+        cout << "1. Register\n2. Login\n3. Exit\n";
+        cin >> choice;
+
+        if (choice == 1) {
+            string username, password;
+            cout << "Register\n";
+            cout << "Select a username: ";
+            cin >> username;
+            cout << "Select a password: ";
+            cin >> password;
+
+            userData[username] = password;
+            writeUserData(userData);
+            cout << "Welcome " << username << "!" << endl;
+        } else if (choice == 2) {
+            if (login(userData)) {
+                cout << "Successfully logged in!" << endl;
+                cout << "Dashboard\nNo new messages\n";
+            } else {
+                cout << "Invalid Login\n";
+            }
+        }
+    } while (choice != 3);
+
+    return 0;
+}
